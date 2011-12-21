@@ -24,6 +24,7 @@ Gem::Specification.new do |s|
     "README.rdoc",
     "Rakefile",
     "VERSION",
+    "bootstrap-rails.gemspec",
     "lib/bootstrap-rails.rb",
     "lib/bootstrap-rails/version.rb",
     "lib/generators/bootstrap_rails/themed/templates/view_edit.html.erb",
