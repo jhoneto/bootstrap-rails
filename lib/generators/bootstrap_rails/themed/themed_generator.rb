@@ -7,7 +7,8 @@ module BootstrapRails
     argument :controller_path,  :type => :string
     argument :model_name,       :type => :string, :required => false    
     
-    class_option :layout,         :type => :string,   :desc => 'Specify the layout name'               
+    class_option :layout,         :type => :string,   :desc => 'Specify the layout name'
+    class_option :engine,         :type => :string,   :default => 'erb', :desc => 'Specify the template engine'
     class_option :will_paginate,  :type => :boolean,  :default => false, :desc => 'Specify if you use will_paginate'
     class_option :themed_type,    :type => :string,   :default => 'crud', :desc => 'Specify the themed type, crud or text. Default is crud'
     
@@ -16,11 +17,25 @@ module BootstrapRails
       initialize_views_variables
     end
     
+    
     def copy_views
-      generate_views
-      gsub_file(File.join('app/views/layouts', "#{options[:layout]}.html.#{options.engine}"), /\<div\s+id=\"main-navigation\">.*\<\/ul\>/mi) do |match|
-        match.gsub!(/\<\/ul\>/, "")
-        %|#{match} <li class="<%= controller.controller_path == '#{@controller_file_path}' ? 'active' : '' %>"><a href="<%= #{controller_routing_path}_path %>">#{plural_model_name}</a></li></ul>|
+      generate_views      
+      unless options.layout.blank?
+        if options.engine =~ /erb/
+          gsub_file(File.join('app/views/layouts', "#{options[:layout]}.html.#{options.engine}"), /\<div\s+id=\"main-navigation\">.*\<\/ul\>/mi) do |match|
+            match.gsub!(/\<\/ul\>/, "")
+            %|#{match} <li class="<%= controller.controller_path == '#{@controller_file_path}' ? 'active' : '' %>"><a href="<%= #{controller_routing_path}_path %>">#{plural_model_name}</a></li></ul>|
+          end
+        elsif options.engine =~ /haml/
+          gsub_file(File.join('app/views/layouts', "#{options[:layout]}.html.#{options.engine}"), /#main-navigation.*#wrapper.wat-cf/mi) do |match|
+            match.gsub!(/      #wrapper.wat-cf/, "")
+            %|#{match}| +
+            "  "*6 + %|%li{:class => controller.controller_path == '#{@controller_file_path}' ? 'active' : '' }\n| +
+            "  "*7 + %|%a{:href => #{controller_routing_path}_path} #{plural_model_name}\n| +
+            "  "*3 + %|#wrapper.wat-cf|
+          end
+        end
+      end
     end
 
   protected
@@ -81,20 +96,21 @@ module BootstrapRails
     def generate_views
       views = {
         'crud' => {
-          'view_tables.html.erb'  => File.join('app/views', @controller_file_path, "index.html.erb"),
-          'view_new.html.erb'     => File.join('app/views', @controller_file_path, "new.html.erb"),
-          'view_edit.html.erb'    => File.join('app/views', @controller_file_path, "edit.html.erb"),
-          'view_form.html.erb'    => File.join('app/views', @controller_file_path, "_form.html.erb"),
-          'view_show.html.erb'    => File.join('app/views', @controller_file_path, "show.html.erb"),
-          'view_sidebar.html.erb' => File.join('app/views', @controller_file_path, "_sidebar.html.erb")
+          'view_tables.html.erb'  => File.join('app/views', @controller_file_path, "index.html.#{options.engine}"),
+          'view_new.html.erb'     => File.join('app/views', @controller_file_path, "new.html.#{options.engine}"),
+          'view_edit.html.erb'    => File.join('app/views', @controller_file_path, "edit.html.#{options.engine}"),
+          'view_form.html.erb'    => File.join('app/views', @controller_file_path, "_form.html.#{options.engine}"),
+          'view_show.html.erb'    => File.join('app/views', @controller_file_path, "show.html.#{options.engine}"),
+          'view_sidebar.html.erb' => File.join('app/views', @controller_file_path, "_sidebar.html.#{options.engine}")
         },
         'text' => {
-          'view_text.html.erb'    => File.join('app/views', @controller_file_path, "show.html.erb"),
-          'view_sidebar.html.erb' => File.join('app/views', @controller_file_path, "_sidebar.html.erb")
+          'view_text.html.erb'    => File.join('app/views', @controller_file_path, "show.html.#{options.engine}"),
+          'view_sidebar.html.erb' => File.join('app/views', @controller_file_path, "_sidebar.html.#{options.engine}")
         }
       }
       selected_views = views[options.themed_type]                    
-      generate_erb_views(selected_views)                            
+      generate_erb_views(selected_views)
+      #options.engine == 'haml' ? generate_haml_views(selected_views) : generate_erb_views(selected_views)
     end
     
     def generate_erb_views(views)
@@ -103,6 +119,6 @@ module BootstrapRails
       end
     end
     
-    
+   
   end
 end

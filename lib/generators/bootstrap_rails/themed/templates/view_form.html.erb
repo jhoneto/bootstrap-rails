@@ -1,14 +1,13 @@
-<% columns.each do |column| %>
-  <div class="group">
-    <%%= f.label :<%= column.name %>, t("activerecord.attributes.<%= model_name.underscore %>.<%= column.name %>", :default => "<%= column.name.humanize %>"), :class => :label %>
-    <%%= f.<%= column.field_type %> :<%= column.name %>, :class => '<%= column.field_type %>' %>
-    <span class="description">Ex: a simple text</span>
+<% columns.each do |column| %> 
+   <div class="clearfix">
+     <label for="xlInput"><%%= t("activerecord.attributes.<%= model_name.underscore %>.<%= column.name %>", :default => "<%= column.name.humanize %>") %></label>
+     <div class="input">
+       <%%= f.<%= column.field_type %> :<%= column.name %>, :class => "xlarge" %>
+     </div>
   </div>
-<%- end -%>
-<div class="group navform wat-cf">
-  <button class="button" type="submit">
-    <%%= image_tag("web-app-theme/icons/tick.png", :alt => "#{t("web-app-theme.save", :default => "Save")}") %> <%%= t("web-app-theme.save", :default => "Save") %>
-  </button>
-  <span class="text_button_padding"><%%= t("web-app-theme.or", :default => "or") %></span>
-	<%%= link_to t("web-app-theme.cancel", :default => "Cancel"), <%= controller_routing_path %>_path, :class => "text_button_padding link_button" %>
+<%- end -%>       
+
+<div class="actions">
+  <input type="submit" class="btn large primary" value="Salvar">&nbsp;<%%= link_to t("bootstrap-rails.cancel", :default => "Cancel"), <%= controller_routing_path %>_path, :class => "btn large" %>
 </div>
+
