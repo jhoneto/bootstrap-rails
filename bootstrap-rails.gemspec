@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = [%q{Hamilton Oliveira}]
-  s.date = %q{2011-12-21}
+  s.date = %q{2011-12-22}
   s.description = %q{Bootstrap theme gem}
   s.email = %q{jhamilton.oliveira@gmail.com}
   s.extra_rdoc_files = [
