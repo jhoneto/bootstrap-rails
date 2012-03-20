@@ -1,9 +1,9 @@
-<ul class="tabs"> 
+<ul class="nav nav-tabs"> 
 	<li class="active"><%%= link_to "#{t("bootstrap-rails.list", :default => "List")}", <%= controller_routing_path %>_path  %></li>  
 	<li><%%= link_to "#{t("bootstrap-rails.new", :default => "New")}", new_<%= singular_controller_routing_path %>_path %></li>
 </ul>   
-<h2 class="title"><%%= t("bootstrap-rails.all", :default => "All")  %> <%= plural_model_name %>
-<table class="bordered-table zebra-striped">
+<h2 class="title"><%%= t("bootstrap-rails.all", :default => "All")  %> <%= plural_model_name %></h2>
+<table class="table table-striped table-bordered">
     <thead>             
       <th>#</th>   
       <% unless columns.empty? -%>

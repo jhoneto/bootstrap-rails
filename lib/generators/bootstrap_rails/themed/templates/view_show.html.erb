@@ -1,4 +1,4 @@
-<ul class="tabs"> 
+<ul class="nav nav-tabs"> 
 	<li><%%= link_to "#{t("bootstrap-rails.list", :default => "List")}", <%= controller_routing_path %>_path  %></li> 
 	<li><%%= link_to "#{t("bootstrap-rails.new", :default => "New")}", new_<%= singular_controller_routing_path %>_path %></li>  
 	<li class="active"><%%= link_to "#{t("bootstrap-rails.show", :default => "Show")}", <%= singular_controller_routing_path %>_path %></li>
@@ -12,8 +12,8 @@
 <%- end -%>                  
 
 <div class="actions">
-	<%%= link_to t("ootstrap-rails.edit", :default=> "Edit"), edit_<%= singular_controller_routing_path %>_path(@<%= resource_name %>), :class => "btn large primary" %>
-    <%%= link_to t("ootstrap-rails.delete", :default => "Delete"), <%= singular_controller_routing_path %>_path(@<%= resource_name %>), :method => "delete", :class => "btn large", :confirm => "#{t("web-app-theme.confirm", :default => "Are you sure?")}" %>
+	<%%= link_to t("bootstrap-rails.edit", :default=> "Edit"), edit_<%= singular_controller_routing_path %>_path(@<%= resource_name %>), :class => "btn large primary" %>
+    <%%= link_to t("bootstrap-rails.delete", :default => "Delete"), <%= singular_controller_routing_path %>_path(@<%= resource_name %>), :method => "delete", :class => "btn large", :confirm => "#{t("web-app-theme.confirm", :default => "Are you sure?")}" %>
 </div>      
     
 <%% content_for :sidebar, render(:partial => 'sidebar') -%>
