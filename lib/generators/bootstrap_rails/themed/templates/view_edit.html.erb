@@ -5,8 +5,9 @@
 </ul>
 <h2 class="title"><%%= t("bootstrap-rails.edit", :default => "Edit") %> <%= model_name %></h2>                            
 
-<%%= form_for @<%= model_name.underscore  %>, :url => <%= singular_controller_routing_path %>_path(@<%= resource_name %>), :html => { :class => "form-stacked" } do |f| -%>
-    <%%= render :partial => "form", :locals => {:f => f} %>
+<%%= semantic_form_for @<%= model_name.underscore  %> do |f| -%>
+<%%= f.semantic_errors %>    
+  <%%= render :partial => "form", :locals => {:f => f} %>
 <%% end -%>                        
 
 <%% content_for :sidebar, render(:partial => 'sidebar') -%> 

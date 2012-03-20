@@ -3,7 +3,8 @@
 	<li class="active"><%%= link_to "#{t("bootstrap-rails.new", :default => "New")}", new_<%= singular_controller_routing_path %>_path %></li>
 </ul>
 <h2 class="title"><%%= t("bootstrap-rails.new", :default => "New")%>  <%= model_name %></h2> 
-<%%= form_for :<%= model_name.underscore  %>, :url => <%= controller_routing_path %>_path, :html => { :class => "form-stacked" } do |f| -%>
+<%%= semantic_form_for @<%= model_name.underscore  %> do |f| -%>
+<%%= f.semantic_errors %>
   <%%= render :partial => "form", :locals => {:f => f} %>
 <%% end -%>
 
