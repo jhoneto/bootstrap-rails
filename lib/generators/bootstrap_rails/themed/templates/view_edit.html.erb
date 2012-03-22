@@ -3,7 +3,7 @@
 	<li><%%= link_to "#{t("bootstrap-rails.new", :default => "New")}", new_<%= singular_controller_routing_path %>_path %></li>  
 	<li class="active"><%%= link_to "#{t("bootstrap-rails.edit", :default => "Edit")}", edit_<%= singular_controller_routing_path %>_path %></li>
 </ul>
-<h2 class="title"><%%= t("bootstrap-rails.edit", :default => "Edit") %> <%= model_name %></h2>                            
+<h2 class="title"><%%= t("bootstrap-rails.edit", :default => "Edit") %> <%%= t("activerecord.models." + model_name) %></h2>                            
 
 <%%= semantic_form_for @<%= model_name.underscore  %> do |f| -%>
 <%%= f.semantic_errors %>    
